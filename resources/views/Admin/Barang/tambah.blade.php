@@ -10,7 +10,7 @@
                     <div class="col-md-7">
                         <div class="form-group">
                             <label for="kode" class="form-label">Kode Barang <span class="text-danger">*</span></label>
-                            <input type="text" name="kode" readonly class="form-control">
+                            <input type="text" name="kode" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="nama" class="form-label">Nama Barang <span class="text-danger">*</span></label>
@@ -107,7 +107,7 @@
         const harga = $("input[name='harga']").val();
         const foto = $('#GetFile')[0].files;
         var fd = new FormData();
-        // Append data 
+        // Append data
         fd.append('foto', foto[0]);
         fd.append('kode', kode);
         fd.append('nama', nama);

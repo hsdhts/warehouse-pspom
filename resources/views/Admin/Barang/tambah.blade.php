@@ -10,7 +10,8 @@
                     <div class="col-md-7">
                         <div class="form-group">
                             <label for="kode" class="form-label">Kode Barang <span class="text-danger">*</span></label>
-                            <input type="text" name="kode" class="form-control">
+                            <input type="text" name="kode" class="form-control" placeholder="Contoh: BRG001, LAPTOP001, dll" maxlength="20">
+                            <small class="form-text text-muted">Masukkan kode barang yang unik (maksimal 20 karakter)</small>
                         </div>
                         <div class="form-group">
                             <label for="nama" class="form-label">Nama Barang <span class="text-danger">*</span></label>
@@ -130,6 +131,16 @@
                 });
                 table.ajax.reload(null, false);
                 reset();
+            },
+            error: function(xhr, status, error) {
+                setLoading(false);
+                if (xhr.status === 400) {
+                    var response = JSON.parse(xhr.responseText);
+                    validasi(response.error, 'warning');
+                    $("input[name='kode']").addClass('is-invalid');
+                } else {
+                    validasi('Terjadi kesalahan, silakan coba lagi!', 'error');
+                }
             }
         });
     }

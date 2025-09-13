@@ -94,7 +94,7 @@ class BarangController extends Controller
                     }else{
                         $result = '<span class="text-danger">'.$totalstok.'</span>';
                     }
-                    
+
 
                     return $result;
                 })
@@ -200,7 +200,7 @@ class BarangController extends Controller
                     }else{
                         $result = '<span class="text-danger">'.$totalstok.'</span>';
                     }
-                    
+
 
                     return $result;
                 })
@@ -234,6 +234,11 @@ class BarangController extends Controller
 
     public function proses_tambah(Request $request)
     {
+        $existingBarang = BarangModel::where('barang_kode', $request->kode)->first();
+        if ($existingBarang) {
+            return response()->json(['error' => 'Kode barang sudah ada, silakan gunakan kode yang berbeda!'], 400);
+        }
+
         $img = "";
         $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $request->nama)));
 
@@ -266,6 +271,13 @@ class BarangController extends Controller
 
     public function proses_ubah(Request $request, BarangModel $barang)
     {
+        // Validasi kode barang tidak boleh duplikat (kecuali untuk barang yang sedang diedit)
+        $existingBarang = BarangModel::where('barang_kode', $request->kode)
+                                   ->where('barang_id', '!=', $barang->barang_id)
+                                   ->first();
+        if ($existingBarang) {
+            return response()->json(['error' => 'Kode barang sudah ada, silakan gunakan kode yang berbeda!'], 400);
+        }
 
         $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $request->nama)));
 

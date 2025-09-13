@@ -21,7 +21,7 @@
                 <h3 class="card-title">Data</h3>
                 @if($hakTambah > 0)
                 <div>
-                    <a class="modal-effect btn btn-primary-light" onclick="generateID()" data-bs-effect="effect-super-scaled" data-bs-toggle="modal" href="#modaldemo8">Tambah Data <i class="fe fe-plus"></i></a>
+                    <a class="modal-effect btn btn-primary-light" data-bs-effect="effect-super-scaled" data-bs-toggle="modal" href="#modaldemo8">Tambah Data <i class="fe fe-plus"></i></a>
                 </div>
                 @endif
             </div>
@@ -55,10 +55,10 @@
 @include('Admin.Barang.gambar')
 
 <script>
-    function generateID(){
-        id = new Date().getTime();
-        $("input[name='kode']").val("BRG-"+id);
-    }
+    // function generateID(){
+    //     id = new Date().getTime();
+    //     $("input[name='kode']").val("BRG-"+id);
+    // }
     function update(data){
         $("input[name='idbarangU']").val(data.barang_id);
         $("input[name='kodeU']").val(data.barang_kode);

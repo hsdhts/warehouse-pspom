@@ -23,7 +23,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Kode Barang <span class="text-danger me-1">*</span>
+                            <label>Kode Barang / Scan QR <span class="text-danger me-1">*</span>
                                 <input type="hidden" id="status" value="false">
                                 <div class="spinner-border spinner-border-sm d-none" id="loaderkd" role="status">
                                     <span class="visually-hidden">Loading...</span>
@@ -83,6 +83,13 @@
         }
     });
 
+    $('input[name="jml"]').keypress(function(event) {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13') {
+            checkForm();
+        }
+    });
+
     function modalBarang() {
         $('#modalBarang').modal('show');
         $('#modaldemo8').addClass('d-none');
@@ -111,6 +118,9 @@
                     $("#nmbarang").val(data[0].barang_nama);
                     $("#satuan").val(data[0].satuan_nama);
                     $("#jenis").val(data[0].jenisbarang_nama);
+                    $("input[name='jml']").val(1);
+                    $("input[name='jml']").focus();
+                    $("input[name='jml']").select();
                 } else {
                     $("#loaderkd").addClass('d-none');
                     $("#status").val("false");
@@ -169,13 +179,15 @@
                 jml: jml
             },
             success: function(data) {
-                $('#modaldemo8').modal('toggle');
+                // $('#modaldemo8').modal('toggle');
                 swal({
                     title: "Berhasil ditambah!",
-                    type: "success"
+                    type: "success",
+                    timer: 1000,
+                    showConfirmButton: false
                 });
                 table.ajax.reload(null, false);
-                reset();
+                resetForNextItem();
 
             }
         });
@@ -200,6 +212,18 @@
         $("#jenis").val('');
         $("#status").val('false');
         setLoading(false);
+    }
+
+    function resetForNextItem() {
+        resetValid();
+        $("input[name='kdbarang']").val('');
+        $("input[name='jml']").val('0');
+        $("#nmbarang").val('');
+        $("#satuan").val('');
+        $("#jenis").val('');
+        $("#status").val('false');
+        setLoading(false);
+        $("input[name='kdbarang']").focus();
     }
 
     function setLoading(bool) {

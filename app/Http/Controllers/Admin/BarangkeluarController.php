@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Yajra\DataTables\DataTables;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class BarangkeluarController extends Controller
 {
@@ -40,6 +41,10 @@ class BarangkeluarController extends Controller
                     $barang = $row->barang_id == '' ? '-' : $row->barang_nama;
 
                     return $barang;
+                })
+                ->addColumn('qrcode', function ($row) {
+                    if (!$row->bk_kode) return '';
+                    return QrCode::size(50)->generate($row->bk_kode);
                 })
                 ->addColumn('action', function ($row) {
                     $array = array(
@@ -77,7 +82,7 @@ class BarangkeluarController extends Controller
                     }
                     return $button;
                 })
-                ->rawColumns(['action', 'tgl', 'tujuan', 'barang'])->make(true);
+                ->rawColumns(['action', 'tgl', 'tujuan', 'barang', 'qrcode'])->make(true);
         }
     }
 

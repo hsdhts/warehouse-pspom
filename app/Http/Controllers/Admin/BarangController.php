@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class BarangController extends Controller
 {
@@ -51,6 +52,10 @@ class BarangController extends Controller
                     }
 
                     return $img;
+                })
+                ->addColumn('qrcode', function ($row) {
+                    if (!$row->barang_kode) return '';
+                    return QrCode::size(50)->generate($row->barang_kode);
                 })
                 ->addColumn('jenisbarang', function ($row) {
                     $jenisbarang = $row->jenisbarang_id == '' ? '-' : $row->jenisbarang_nama;
@@ -139,7 +144,7 @@ class BarangController extends Controller
 
                     return $button;
                 })
-                ->rawColumns(['action', 'img', 'jenisbarang', 'satuan', 'merk', 'currency', 'totalstok'])->make(true);
+                ->rawColumns(['action', 'img', 'qrcode', 'jenisbarang', 'satuan', 'merk', 'currency', 'totalstok'])->make(true);
         }
     }
 

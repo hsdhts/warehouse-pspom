@@ -33,6 +33,7 @@
                             <th class="border-bottom-0">Gambar</th>
                             <th class="border-bottom-0">Kode Barang</th>
                             <th class="border-bottom-0">Nama Barang</th>
+                            <th class="border-bottom-0">QR Code</th>
                             <th class="border-bottom-0">Jenis</th>
                             <th class="border-bottom-0">Satuan</th>
                             <th class="border-bottom-0">Merk</th>
@@ -69,7 +70,7 @@
         $("input[name='stokU']").val(data.barang_stok);
         $("input[name='hargaU']").val(data.barang_harga.replace(/_/g, ' '));
         if(data.barang_gambar != 'image.png'){
-            $("#outputImgU").attr("src", "{{asset('storage/barang/')}}"+"/"+data.barang_gambar);    
+            $("#outputImgU").attr("src", "{{asset('storage/barang/')}}"+"/"+data.barang_gambar);
         }
     }
     function hapus(data) {
@@ -137,6 +138,12 @@
                 {
                     data: 'barang_nama',
                     name: 'barang_nama',
+                },
+                {
+                    data: 'qrcode',
+                    name: 'qrcode',
+                    searchable: false,
+                    orderable: false
                 },
                 {
                     data: 'jenisbarang',

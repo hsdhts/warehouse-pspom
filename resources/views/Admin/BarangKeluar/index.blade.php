@@ -36,6 +36,7 @@
                                 <th class="border-bottom-0" width="1%">No</th>
                                 <th class="border-bottom-0">Tanggal Keluar</th>
                                 <th class="border-bottom-0">Kode Barang Keluar</th>
+                                <th class="border-bottom-0">QR Code</th>
                                 <th class="border-bottom-0">Kode Barang</th>
                                 <th class="border-bottom-0">Barang</th>
                                 <th class="border-bottom-0">Jumlah Keluar</th>
@@ -133,13 +134,19 @@
                         name: 'bk_tanggal',
                     },
                     {
-                        data: 'bk_kode',
-                        name: 'bk_kode',
-                    },
-                    {
-                        data: 'barang_kode',
-                        name: 'barang_kode',
-                    },
+                    data: 'bk_kode',
+                    name: 'bk_kode',
+                },
+                {
+                    data: 'qrcode',
+                    name: 'qrcode',
+                    searchable: false,
+                    orderable: false
+                },
+                {
+                    data: 'barang_kode',
+                    name: 'barang_kode',
+                },
                     {
                         data: 'barang',
                         name: 'barang_nama',

@@ -36,7 +36,6 @@
                                 <th class="border-bottom-0" width="1%">No</th>
                                 <th class="border-bottom-0">Tanggal Keluar</th>
                                 <th class="border-bottom-0">Kode Barang Keluar</th>
-                                <th class="border-bottom-0">QR Code</th>
                                 <th class="border-bottom-0">Kode Barang</th>
                                 <th class="border-bottom-0">Barang</th>
                                 <th class="border-bottom-0">Jumlah Keluar</th>

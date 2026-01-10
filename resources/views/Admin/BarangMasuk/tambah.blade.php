@@ -28,7 +28,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Kode Barang / Scan QR <span class="text-danger me-1">*</span>
+                            <label>Kode Barang <span class="text-danger me-1">*</span>
                                 <input type="hidden" id="status" value="false">
                                 <div class="spinner-border spinner-border-sm d-none" id="loaderkd" role="status">
                                     <span class="visually-hidden">Loading...</span>

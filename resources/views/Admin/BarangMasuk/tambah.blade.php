@@ -254,7 +254,12 @@
 
     function reset() {
         resetValid();
-        $("input[name='tglmasuk']").val('');
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const today = `${year}-${month}-${day}`;
+        $("input[name='tglmasuk']").val(today);
         $("input[name='kdbarang']").val('');
         $("select[name='customer']").val('');
         $("input[name='jml']").val('0');
@@ -286,5 +291,14 @@
             $('#btnLoader').addClass('d-none');
         }
     }
+
+    $(document).ready(function() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const today = `${year}-${month}-${day}`;
+        $("input[name='tglmasuk']").val(today);
+    });
 </script>
 @endsection

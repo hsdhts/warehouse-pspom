@@ -10,7 +10,7 @@
                     <i class="icon icon-exclamation fs-70 text-warning lh-1 my-5 d-inline-block"></i>
                     <h3 class="mb-5">Yakin hapus <span id="vmenu"></span> ?</h3>
                     <input type="hidden" name="idmenu" id="idmenu">
-                    <button class="btn btn-danger-light pd-x-25">Iya</button>
+                    <button class="btn btn-danger-light pd-x-25">Oke</button>
                     <button type="reset" data-bs-dismiss="modal" class="btn btn-default pd-x-25">Batal</button>
                 </div>
             </form>

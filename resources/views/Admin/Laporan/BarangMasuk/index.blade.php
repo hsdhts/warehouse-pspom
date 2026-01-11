@@ -47,7 +47,6 @@
                         <thead>
                             <th class="border-bottom-0" width="1%">No</th>
                             <th class="border-bottom-0">Tanggal Masuk</th>
-                            <th class="border-bottom-0">Kode Barang Masuk</th>
                             <th class="border-bottom-0">Kode Barang</th>
                             <th class="border-bottom-0">Customer</th>
                             <th class="border-bottom-0">Barang</th>
@@ -110,10 +109,6 @@
                 {
                     data: 'tgl',
                     name: 'bm_tanggal',
-                },
-                {
-                    data: 'bm_kode',
-                    name: 'bm_kode',
                 },
                 {
                     data: 'barang_kode',

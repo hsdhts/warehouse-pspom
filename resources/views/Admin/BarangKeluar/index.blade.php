@@ -22,7 +22,7 @@
                     <h3 class="card-title">Data</h3>
                     @if ($hakTambah > 0)
                         <div>
-                            <a class="modal-effect btn btn-primary-light" onclick="generateID()"
+                            <a class="modal-effect btn btn-primary-light"
                                 data-bs-effect="effect-super-scaled" data-bs-toggle="modal" href="#modaldemo8">Tambah Data
                                 <i class="fe fe-plus"></i></a>
                         </div>
@@ -35,7 +35,6 @@
                             <thead>
                                 <th class="border-bottom-0" width="1%">No</th>
                                 <th class="border-bottom-0">Tanggal Keluar</th>
-                                <th class="border-bottom-0">Kode Barang Keluar</th>
                                 <th class="border-bottom-0">Kode Barang</th>
                                 <th class="border-bottom-0">Barang</th>
                                 <th class="border-bottom-0">Jumlah Keluar</th>
@@ -57,11 +56,6 @@
     @include('Admin.BarangKeluar.barang')
 
     <script>
-        function generateID() {
-            id = new Date().getTime();
-            $("input[name='bkkode']").val("BK-" + id);
-        }
-
         function update(data) {
             $("input[name='idbkU']").val(data.bk_id);
             $("input[name='bkkodeU']").val(data.bk_kode);
@@ -132,10 +126,6 @@
                         data: 'tgl',
                         name: 'bk_tanggal',
                     },
-                    {
-                    data: 'bk_kode',
-                    name: 'bk_kode',
-                },
                 {
                     data: 'barang_kode',
                     name: 'barang_kode',

@@ -86,11 +86,12 @@ class BarangmasukController extends Controller
 
     public function proses_tambah(Request $request)
     {
+        $bm_kode = 'BM-' . time();
 
         //insert data
         BarangmasukModel::create([
             'bm_tanggal' => $request->tglmasuk,
-            'bm_kode' => $request->bmkode,
+            'bm_kode' => $bm_kode,
             'barang_kode' => $request->barang,
             'customer_id'   => $request->customer,
             'bm_jumlah'   => $request->jml,

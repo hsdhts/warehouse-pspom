@@ -243,7 +243,6 @@
 
     function reset() {
         resetValid();
-        $("input[name='bkkode']").val('');
         $("input[name='tglkeluar']").val('');
         $("input[name='kdbarang']").val('');
         $("input[name='tujuan']").val('');

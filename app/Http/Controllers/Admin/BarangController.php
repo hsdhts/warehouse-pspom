@@ -28,6 +28,15 @@ class BarangController extends Controller
         return view('Admin.Barang.index', $data);
     }
 
+    public function printQr($id)
+    {
+        $barang = BarangModel::find($id);
+        $data['title'] = 'Print QR Code Barang';
+        $data['barang'] = $barang;
+        $data['qrcode'] = QrCode::size(300)->generate($barang->barang_kode);
+        return view('Admin.Barang.printqr', $data);
+    }
+
     public function getbarang($id)
     {
         $data = BarangModel::leftJoin('tbl_jenisbarang', 'tbl_jenisbarang.jenisbarang_id', '=', 'tbl_barang.jenisbarang_id')->leftJoin('tbl_satuan', 'tbl_satuan.satuan_id', '=', 'tbl_barang.satuan_id')->leftJoin('tbl_merk', 'tbl_merk.merk_id', '=', 'tbl_barang.merk_id')->where('tbl_barang.barang_kode', '=', $id)->get();
@@ -55,7 +64,10 @@ class BarangController extends Controller
                 })
                 ->addColumn('qrcode', function ($row) {
                     if (!$row->barang_kode) return '';
-                    return QrCode::size(50)->generate($row->barang_kode);
+                    $array = array(
+                        "id" => $row->barang_id,
+                    );
+                    return '<a data-bs-effect="effect-super-scaled" data-bs-toggle="modal" href="#Qmodaldemo8" onclick=qrcode(' . json_encode($array) . ')>' . QrCode::size(50)->generate($row->barang_kode) . '</a>';
                 })
                 ->addColumn('jenisbarang', function ($row) {
                     $jenisbarang = $row->jenisbarang_id == '' ? '-' : $row->jenisbarang_nama;

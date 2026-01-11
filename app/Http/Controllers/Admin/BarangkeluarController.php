@@ -42,10 +42,6 @@ class BarangkeluarController extends Controller
 
                     return $barang;
                 })
-                ->addColumn('qrcode', function ($row) {
-                    if (!$row->bk_kode) return '';
-                    return QrCode::size(50)->generate($row->bk_kode);
-                })
                 ->addColumn('action', function ($row) {
                     $array = array(
                         "bk_id" => $row->bk_id,
@@ -82,7 +78,7 @@ class BarangkeluarController extends Controller
                     }
                     return $button;
                 })
-                ->rawColumns(['action', 'tgl', 'tujuan', 'barang', 'qrcode'])->make(true);
+                ->rawColumns(['action', 'tgl', 'tujuan', 'barang'])->make(true);
         }
     }
 

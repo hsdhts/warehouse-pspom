@@ -32,6 +32,7 @@
                             <th class="border-bottom-0" width="1%">No</th>
                             <th class="border-bottom-0">Gambar</th>
                             <th class="border-bottom-0">Kode Barang</th>
+                            <th class="border-bottom-0">QR Code</th>
                             <th class="border-bottom-0">Nama Barang</th>
                             <th class="border-bottom-0">Jenis</th>
                             <th class="border-bottom-0">Satuan</th>
@@ -54,6 +55,22 @@
 @include('Admin.Barang.hapus')
 @include('Admin.Barang.gambar')
 
+<div class="modal fade" id="Qmodaldemo8">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modal-content-demo">
+            <div class="modal-header">
+                <h6 class="modal-title">QR Code Barang</h6><button aria-label="Close" class="btn-close" data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body text-center">
+                <iframe id="qrFrame" src="" style="width:100%; height:400px; border:none;"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-light" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     // function generateID(){
     //     id = new Date().getTime();
@@ -69,7 +86,7 @@
         $("input[name='stokU']").val(data.barang_stok);
         $("input[name='hargaU']").val(data.barang_harga.replace(/_/g, ' '));
         if(data.barang_gambar != 'image.png'){
-            $("#outputImgU").attr("src", "{{asset('storage/barang/')}}"+"/"+data.barang_gambar);    
+            $("#outputImgU").attr("src", "{{asset('storage/barang/')}}"+"/"+data.barang_gambar);
         }
     }
     function hapus(data) {
@@ -82,6 +99,11 @@
         }else{
             $("#outputImgG").attr("src", "{{url('/assets/default/barang/image.png')}}");
         }
+    }
+    function qrcode(data) {
+        var url = "{{ route('barang.printqr', ':id') }}";
+        url = url.replace(':id', data.id);
+        $("#qrFrame").attr("src", url);
     }
     function validasi(judul, status) {
         swal({
@@ -133,6 +155,12 @@
                 {
                     data: 'barang_kode',
                     name: 'barang_kode',
+                },
+                {
+                    data: 'qrcode',
+                    name: 'qrcode',
+                    searchable: false,
+                    orderable: false
                 },
                 {
                     data: 'barang_nama',

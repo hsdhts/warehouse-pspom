@@ -87,6 +87,7 @@ Route::group(['middleware' => 'userlogin'], function () {
         Route::post('/admin/barang/proses_tambah/', [BarangController::class, 'proses_tambah'])->name('barang.store');
         Route::post('/admin/barang/proses_ubah/{barang}', [BarangController::class, 'proses_ubah']);
         Route::post('/admin/barang/proses_hapus/{barang}', [BarangController::class, 'proses_hapus']);
+        Route::get('/admin/barang/print-qr/{id}', [BarangController::class, 'printQr'])->name('barang.printqr');
     });
 
     Route::middleware(['checkRoleUser:/customer,menu'])->group(function () {

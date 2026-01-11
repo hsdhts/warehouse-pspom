@@ -38,6 +38,7 @@
                                 <input type="text" class="form-control" autocomplete="off" name="kdbarang" placeholder="">
                                 <button class="btn btn-primary-light" onclick="searchBarang()" type="button"><i class="fe fe-search"></i></button>
                                 <button class="btn btn-success-light" onclick="modalBarang()" type="button"><i class="fe fe-box"></i></button>
+                                <button class="btn btn-info-light" onclick="scanQr()" type="button"><i class="fa fa-qrcode"></i></button>
                             </div>
                         </div>
                         <div class="form-group">
@@ -78,9 +79,55 @@
     </div>
 </div>
 
+<!-- MODAL SCAN QR -->
+<div class="modal fade" id="modalScanQr" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Scan QR Code</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="stopScan()"></button>
+            </div>
+            <div class="modal-body">
+                <div id="reader" width="100%"></div>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section('formTambahJS')
+<script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 <script>
+    var html5QrcodeScanner = null;
+
+    function scanQr() {
+        $('#modalScanQr').modal('show');
+        if (html5QrcodeScanner === null) {
+            html5QrcodeScanner = new Html5QrcodeScanner(
+                "reader", { fps: 10, qrbox: 250 }
+            );
+        }
+        html5QrcodeScanner.render(onScanSuccess);
+    }
+
+    function stopScan() {
+        if (html5QrcodeScanner) {
+            html5QrcodeScanner.clear();
+        }
+    }
+
+    function onScanSuccess(decodedText, decodedResult) {
+        // Handle on success condition with the decoded text or result.
+        console.log(`Scan result: ${decodedText}`, decodedResult);
+        $('input[name="kdbarang"]').val(decodedText);
+        html5QrcodeScanner.clear();
+        $('#modalScanQr').modal('hide');
+        getbarangbyid(decodedText);
+    }
+
+    $('#modalScanQr').on('hidden.bs.modal', function () {
+        stopScan();
+    });
+
     $('input[name="kdbarang"]').keypress(function(event) {
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if (keycode == '13') {

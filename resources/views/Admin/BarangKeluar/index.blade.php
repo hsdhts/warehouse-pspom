@@ -110,7 +110,7 @@
                 "info": true,
                 "order": [],
                 "scrollX": true,
-                "stateSave":true,
+                "stateSave": false,
                 "lengthMenu": [
                     [5, 10, 25, 50, 100],
                     [5, 10, 25, 50, 100]
@@ -135,12 +135,6 @@
                     {
                     data: 'bk_kode',
                     name: 'bk_kode',
-                },
-                {
-                    data: 'qrcode',
-                    name: 'qrcode',
-                    searchable: false,
-                    orderable: false
                 },
                 {
                     data: 'barang_kode',

@@ -147,7 +147,7 @@
         if (tglawal != '' && tglakhir != '') {
             table.ajax.reload(null, false);
         } else {
-            validasi("Isi dulu Form Filter Tanggal!", 'warning');
+            validasi("Filter Tanggal Diisi Terlebih Dahulu!", 'warning');
         }
 
     }
@@ -178,11 +178,49 @@
 
     }
 
+    function excel() {
+        var tglawal = $('input[name="tglawal"]').val();
+        var tglakhir = $('input[name="tglakhir"]').val();
+        if (tglawal != '' && tglakhir != '') {
+            if (tglawal > tglakhir) {
+                validasi("Tanggal Awal tidak boleh lebih besar dari Tanggal Akhir!", 'warning');
+            } else {
+                window.open(
+                    "{{route('lap-sb.excel')}}?tglawal=" + tglawal + "&tglakhir=" + tglakhir,
+                    '_blank'
+                );
+            }
+        } else {
+            swal({
+                title: "Yakin Download Excel Semua Data?",
+                type: "warning",
+                buttons: true,
+                dangerMode: true,
+                confirmButtonText: "Yakin",
+                cancelButtonText: 'Batal',
+                showCancelButton: true,
+                showConfirmButton: true,
+                closeOnConfirm: false,
+                confirmButtonColor: '#09ad95',
+            }, function(value) {
+                if (value == true) {
+                    window.open(
+                        "{{route('lap-sb.excel')}}",
+                        '_blank'
+                    );
+                    swal.close();
+                }
+            });
+
+        }
+
+    }
+
     function validasi(judul, status) {
         swal({
             title: judul,
             type: status,
-            confirmButtonText: "Iya."
+            confirmButtonText: "Oke."
         });
     }
 </script>

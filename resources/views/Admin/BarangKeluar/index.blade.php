@@ -35,7 +35,8 @@
                             <thead>
                                 <th class="border-bottom-0" width="1%">No</th>
                                 <th class="border-bottom-0">Tanggal Keluar</th>
-                                <th class="border-bottom-0">Kode Barang</th>
+                            <th class="border-bottom-0">Timestamp</th>
+                            <th class="border-bottom-0">Kode Barang</th>
                                 <th class="border-bottom-0">Barang</th>
                                 <th class="border-bottom-0">Jumlah Keluar</th>
                                 <th class="border-bottom-0">Tujuan</th>
@@ -80,7 +81,7 @@
             swal({
                 title: judul,
                 type: status,
-                confirmButtonText: "Iya."
+                confirmButtonText: "Oke."
             });
         }
     </script>
@@ -125,6 +126,11 @@
                     {
                         data: 'tgl',
                         name: 'bk_tanggal',
+                    },
+                    {
+                        data: 'timestamp',
+                        name: 'bk_created_at',
+                        searchable: false,
                     },
                 {
                     data: 'barang_kode',

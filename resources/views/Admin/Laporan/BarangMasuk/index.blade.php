@@ -47,6 +47,7 @@
                         <thead>
                             <th class="border-bottom-0" width="1%">No</th>
                             <th class="border-bottom-0">Tanggal Masuk</th>
+                            <th class="border-bottom-0">Timestamp</th>
                             <th class="border-bottom-0">Kode Barang</th>
                             <th class="border-bottom-0">Customer</th>
                             <th class="border-bottom-0">Barang</th>
@@ -111,6 +112,10 @@
                     name: 'bm_tanggal',
                 },
                 {
+                    data: 'timestamp',
+                    name: 'created_at',
+                },
+                {
                     data: 'barang_kode',
                     name: 'barang_kode',
                 },
@@ -135,9 +140,13 @@
         var tglawal = $('input[name="tglawal"]').val();
         var tglakhir = $('input[name="tglakhir"]').val();
         if (tglawal != '' && tglakhir != '') {
-            table.ajax.reload(null, false);
+            if (tglawal > tglakhir) {
+                validasi("Tanggal Awal tidak boleh lebih besar dari Tanggal Akhir!", 'warning');
+            } else {
+                table.ajax.reload(null, false);
+            }
         } else {
-            validasi("Isi dulu Form Filter Tanggal!", 'warning');
+            validasi("Filter Tanggal Diisi Terlebih Dahulu!", 'warning');
         }
 
     }
@@ -152,10 +161,14 @@
         var tglawal = $('input[name="tglawal"]').val();
         var tglakhir = $('input[name="tglakhir"]').val();
         if (tglawal != '' && tglakhir != '') {
-            window.open(
-                "{{route('lap-bm.print')}}?tglawal=" + tglawal + "&tglakhir=" + tglakhir,
-                '_blank'
-            );
+            if (tglawal > tglakhir) {
+                validasi("Tanggal Awal tidak boleh lebih besar dari Tanggal Akhir!", 'warning');
+            } else {
+                window.open(
+                    "{{route('lap-bm.print')}}?tglawal=" + tglawal + "&tglakhir=" + tglakhir,
+                    '_blank'
+                );
+            }
         } else {
             swal({
                 title: "Yakin Print Semua Data?",
@@ -186,13 +199,17 @@
         var tglawal = $('input[name="tglawal"]').val();
         var tglakhir = $('input[name="tglakhir"]').val();
         if (tglawal != '' && tglakhir != '') {
-            window.open(
-                "{{route('lap-bm.pdf')}}?tglawal=" + tglawal + "&tglakhir=" + tglakhir,
-                '_blank'
-            );
+            if (tglawal > tglakhir) {
+                validasi("Tanggal Awal tidak boleh lebih besar dari Tanggal Akhir!", 'warning');
+            } else {
+                window.open(
+                    "{{route('lap-bm.pdf')}}?tglawal=" + tglawal + "&tglakhir=" + tglakhir,
+                    '_blank'
+                );
+            }
         } else {
             swal({
-                title: "Yakin export PDF Semua Data?",
+                title: "Yakin Download PDF Semua Data?",
                 type: "warning",
                 buttons: true,
                 dangerMode: true,
@@ -216,11 +233,86 @@
 
     }
 
+    function excel() {
+        var tglawal = $('input[name="tglawal"]').val();
+        var tglakhir = $('input[name="tglakhir"]').val();
+        if (tglawal != '' && tglakhir != '') {
+            if (tglawal > tglakhir) {
+                validasi("Tanggal Awal tidak boleh lebih besar dari Tanggal Akhir!", 'warning');
+            } else {
+                window.open(
+                    "{{route('lap-bm.excel')}}?tglawal=" + tglawal + "&tglakhir=" + tglakhir,
+                    '_blank'
+                );
+            }
+        } else {
+            swal({
+                title: "Yakin Download Excel Semua Data?",
+                type: "warning",
+                buttons: true,
+                dangerMode: true,
+                confirmButtonText: "Yakin",
+                cancelButtonText: 'Batal',
+                showCancelButton: true,
+                showConfirmButton: true,
+                closeOnConfirm: false,
+                confirmButtonColor: '#09ad95',
+            }, function(value) {
+                if (value == true) {
+                    window.open(
+                        "{{route('lap-bm.excel')}}",
+                        '_blank'
+                    );
+                    swal.close();
+                }
+            });
+
+        }
+
+    }
+
+    function excel() {
+        var tglawal = $('input[name="tglawal"]').val();
+        var tglakhir = $('input[name="tglakhir"]').val();
+        if (tglawal != '' && tglakhir != '') {
+            if (tglawal > tglakhir) {
+                validasi("Tanggal Awal tidak boleh lebih besar dari Tanggal Akhir!", 'warning');
+            } else {
+                window.open(
+                    "{{route('lap-bm.excel')}}?tglawal=" + tglawal + "&tglakhir=" + tglakhir,
+                    '_blank'
+                );
+            }
+        } else {
+            swal({
+                title: "Yakin Download Excel Semua Data?",
+                type: "warning",
+                buttons: true,
+                dangerMode: true,
+                confirmButtonText: "Yakin",
+                cancelButtonText: 'Batal',
+                showCancelButton: true,
+                showConfirmButton: true,
+                closeOnConfirm: false,
+                confirmButtonColor: '#09ad95',
+            }, function(value) {
+                if (value == true) {
+                    window.open(
+                        "{{route('lap-bm.excel')}}",
+                        '_blank'
+                    );
+                    swal.close();
+                }
+            });
+
+        }
+    }
+
     function validasi(judul, status) {
         swal({
             title: judul,
             type: status,
-            confirmButtonText: "Iya."
+            confirmButtonText: "Oke."
         });
     }
 </script>

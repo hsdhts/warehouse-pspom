@@ -48,6 +48,20 @@ class LapStokBarangController extends Controller
         
     }
 
+    public function excel(Request $request)
+    {
+        $data['data'] = BarangModel::leftJoin('tbl_jenisbarang', 'tbl_jenisbarang.jenisbarang_id', '=', 'tbl_barang.jenisbarang_id')->leftJoin('tbl_satuan', 'tbl_satuan.satuan_id', '=', 'tbl_barang.satuan_id')->leftJoin('tbl_merk', 'tbl_merk.merk_id', '=', 'tbl_barang.merk_id')->orderBy('barang_id', 'DESC')->get();
+
+        $data["title"] = "Excel Stok Barang";
+        $data['web'] = WebModel::first();
+        $data['tglawal'] = $request->tglawal;
+        $data['tglakhir'] = $request->tglakhir;
+        
+        return response(view('Admin.Laporan.StokBarang.excel', $data))
+            ->header('Content-Type', 'application/vnd.ms-excel')
+            ->header('Content-Disposition', 'attachment; filename="Laporan_Stok_Barang_'.($request->tglawal ? $request->tglawal.'-'.$request->tglakhir : 'semua').'.xls"');
+    }
+
     public function show(Request $request)
     {
         if ($request->ajax()) {

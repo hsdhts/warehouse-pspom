@@ -94,7 +94,6 @@ use Carbon\Carbon;
             <tr>
                 <th align="center" width="1%">NO</th>
                 <th>TGL KELUAR</th>
-                <th>KODE BRG KELUAR</th>
                 <th>KODE BARANG</th>
                 <th>BARANG</th>
                 <th>JML KELUAR</th>
@@ -107,7 +106,6 @@ use Carbon\Carbon;
             <tr>
                 <td align="center">{{$no++}}</td>
                 <td>{{Carbon::parse($d->bk_tanggal)->translatedFormat('d F Y')}}</td>
-                <td>{{$d->bk_kode}}</td>
                 <td>{{$d->barang_kode}}</td>
                 <td>{{$d->barang_nama}}</td>
                 <td align="center">{{$d->bk_jumlah}}</td>

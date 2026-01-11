@@ -24,9 +24,12 @@ class BarangkeluarController extends Controller
     public function show(Request $request)
     {
         if ($request->ajax()) {
-            $data = BarangkeluarModel::leftJoin('tbl_barang', 'tbl_barang.barang_kode', '=', 'tbl_barangkeluar.barang_kode')->orderBy('bk_id', 'DESC')->get();
+            $data = BarangkeluarModel::select('tbl_barangkeluar.*', 'tbl_barangkeluar.created_at as bk_created_at', 'tbl_barang.barang_nama')->leftJoin('tbl_barang', 'tbl_barang.barang_kode', '=', 'tbl_barangkeluar.barang_kode')->orderBy('bk_id', 'DESC');
             return DataTables::of($data)
                 ->addIndexColumn()
+                ->addColumn('timestamp', function ($row) {
+                    return $row->bk_created_at ? Carbon::parse($row->bk_created_at)->translatedFormat('d F Y H:i:s') : '-';
+                })
                 ->addColumn('tgl', function ($row) {
                     $tgl = $row->bk_tanggal == '' ? '-' : Carbon::parse($row->bk_tanggal)->translatedFormat('d F Y');
 
@@ -38,7 +41,7 @@ class BarangkeluarController extends Controller
                     return $tujuan;
                 })
                 ->addColumn('barang', function ($row) {
-                    $barang = $row->barang_id == '' ? '-' : $row->barang_nama;
+                    $barang = $row->barang_nama == '' ? '-' : $row->barang_nama;
 
                     return $barang;
                 })
@@ -78,7 +81,7 @@ class BarangkeluarController extends Controller
                     }
                     return $button;
                 })
-                ->rawColumns(['action', 'tgl', 'tujuan', 'barang'])->make(true);
+                ->rawColumns(['action', 'tgl', 'tujuan', 'barang', 'timestamp'])->make(true);
         }
     }
 

@@ -9,10 +9,6 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="bmkode" class="form-label">Kode Barang Masuk <span class="text-danger">*</span></label>
-                            <input type="text" name="bmkode" readonly class="form-control" placeholder="">
-                        </div>
-                        <div class="form-group">
                             <label for="tglmasuk" class="form-label">Tanggal Masuk <span class="text-danger">*</span></label>
                             <input type="text" name="tglmasuk" class="form-control datepicker-date" placeholder="">
                         </div>
@@ -219,7 +215,6 @@
     }
 
     function submitForm() {
-        const bmkode = $("input[name='bmkode']").val();
         const tglmasuk = $("input[name='tglmasuk']").val();
         const kdbarang = $("input[name='kdbarang']").val();
         const customer = $("select[name='customer']").val();
@@ -230,7 +225,6 @@
             url: "{{ route('barang-masuk.store') }}",
             enctype: 'multipart/form-data',
             data: {
-                bmkode: bmkode,
                 tglmasuk: tglmasuk,
                 barang: kdbarang,
                 customer: customer,
@@ -260,7 +254,6 @@
 
     function reset() {
         resetValid();
-        $("input[name='bmkode']").val('');
         $("input[name='tglmasuk']").val('');
         $("input[name='kdbarang']").val('');
         $("select[name='customer']").val('');

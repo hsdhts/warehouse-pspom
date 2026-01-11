@@ -63,7 +63,7 @@
         swal({
             title: judul,
             type: status,
-            confirmButtonText: "Iya."
+            confirmButtonText: "Oke."
         });
     }
 </script>

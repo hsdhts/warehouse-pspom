@@ -26,9 +26,12 @@ class BarangmasukController extends Controller
     public function show(Request $request)
     {
         if ($request->ajax()) {
-            $data = BarangmasukModel::leftJoin('tbl_barang', 'tbl_barang.barang_kode', '=', 'tbl_barangmasuk.barang_kode')->leftJoin('tbl_customer', 'tbl_customer.customer_id', '=', 'tbl_barangmasuk.customer_id')->orderBy('bm_id', 'DESC')->get();
+            $data = BarangmasukModel::select('tbl_barangmasuk.*', 'tbl_barangmasuk.created_at as bm_created_at', 'tbl_barang.barang_nama', 'tbl_customer.customer_nama')->leftJoin('tbl_barang', 'tbl_barang.barang_kode', '=', 'tbl_barangmasuk.barang_kode')->leftJoin('tbl_customer', 'tbl_customer.customer_id', '=', 'tbl_barangmasuk.customer_id')->orderBy('bm_id', 'DESC');
             return DataTables::of($data)
                 ->addIndexColumn()
+                ->addColumn('timestamp', function ($row) {
+                    return $row->bm_created_at ? Carbon::parse($row->bm_created_at)->translatedFormat('d F Y H:i:s') : '-';
+                })
                 ->addColumn('tgl', function ($row) {
                     $tgl = $row->bm_tanggal == '' ? '-' : Carbon::parse($row->bm_tanggal)->translatedFormat('d F Y');
 
@@ -40,7 +43,7 @@ class BarangmasukController extends Controller
                     return $customer;
                 })
                 ->addColumn('barang', function ($row) {
-                    $barang = $row->barang_id == '' ? '-' : $row->barang_nama;
+                    $barang = $row->barang_nama == '' ? '-' : $row->barang_nama;
 
                     return $barang;
                 })

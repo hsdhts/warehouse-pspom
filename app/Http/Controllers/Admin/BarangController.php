@@ -116,38 +116,37 @@ class BarangController extends Controller
                     return $result;
                 })
                 ->addColumn('action', function ($row) {
-                    $array = array(
-                        "barang_id" => $row->barang_id,
-                        "jenisbarang_id" => $row->jenisbarang_id,
-                        "satuan_id" => $row->satuan_id,
-                        "merk_id" => $row->merk_id,
-                        "barang_id" => $row->barang_id,
-                        "barang_kode" => $row->barang_kode,
-                        "barang_nama" => trim(preg_replace('/[^A-Za-z0-9-]+/', '_', $row->barang_nama)),
-                        "barang_harga" => $row->barang_harga,
-                        "barang_stok" => $row->barang_stok,
-                        "barang_gambar" => $row->barang_gambar,
-                    );
                     $button = '';
                     $hakEdit = AksesModel::leftJoin('tbl_submenu', 'tbl_submenu.submenu_id', '=', 'tbl_akses.submenu_id')->where(array('tbl_akses.role_id' => Session::get('user')->role_id, 'tbl_submenu.submenu_judul' => 'Barang', 'tbl_akses.akses_type' => 'update'))->count();
                     $hakDelete = AksesModel::leftJoin('tbl_submenu', 'tbl_submenu.submenu_id', '=', 'tbl_akses.submenu_id')->where(array('tbl_akses.role_id' => Session::get('user')->role_id, 'tbl_submenu.submenu_judul' => 'Barang', 'tbl_akses.akses_type' => 'delete'))->count();
+
+                    $barangId = (int) $row->barang_id;
+                    $barangKode = htmlspecialchars((string) $row->barang_kode, ENT_QUOTES, 'UTF-8');
+                    $barangNama = htmlspecialchars((string) $row->barang_nama, ENT_QUOTES, 'UTF-8');
+                    $jenisbarangId = htmlspecialchars((string) $row->jenisbarang_id, ENT_QUOTES, 'UTF-8');
+                    $satuanId = htmlspecialchars((string) $row->satuan_id, ENT_QUOTES, 'UTF-8');
+                    $merkId = htmlspecialchars((string) $row->merk_id, ENT_QUOTES, 'UTF-8');
+                    $barangStok = htmlspecialchars((string) $row->barang_stok, ENT_QUOTES, 'UTF-8');
+                    $barangHarga = htmlspecialchars((string) $row->barang_harga, ENT_QUOTES, 'UTF-8');
+                    $barangGambar = htmlspecialchars((string) $row->barang_gambar, ENT_QUOTES, 'UTF-8');
+
                     if ($hakEdit > 0 && $hakDelete > 0) {
                         $button .= '
                         <div class="g-2">
-                        <a class="btn modal-effect text-primary btn-sm" data-bs-effect="effect-super-scaled" data-bs-toggle="modal" href="#Umodaldemo8" data-bs-toggle="tooltip" data-bs-original-title="Edit" onclick=update(' . json_encode($array) . ')><span class="fe fe-edit text-success fs-14"></span></a>
-                        <a class="btn modal-effect text-danger btn-sm" data-bs-effect="effect-super-scaled" data-bs-toggle="modal" href="#Hmodaldemo8" onclick=hapus(' . json_encode($array) . ')><span class="fe fe-trash-2 fs-14"></span></a>
+                        <a class="btn modal-effect text-primary btn-sm js-edit-barang" data-bs-effect="effect-super-scaled" data-bs-toggle="modal" href="#Umodaldemo8" data-bs-toggle="tooltip" data-bs-original-title="Edit" data-id="' . $barangId . '" data-kode="' . $barangKode . '" data-nama="' . $barangNama . '" data-jenisbarang-id="' . $jenisbarangId . '" data-satuan-id="' . $satuanId . '" data-merk-id="' . $merkId . '" data-stok="' . $barangStok . '" data-harga="' . $barangHarga . '" data-gambar="' . $barangGambar . '"><span class="fe fe-edit text-success fs-14"></span></a>
+                        <a class="btn modal-effect text-danger btn-sm js-hapus-barang" data-bs-effect="effect-super-scaled" data-bs-toggle="modal" href="#Hmodaldemo8" data-id="' . $barangId . '" data-nama="' . $barangNama . '"><span class="fe fe-trash-2 fs-14"></span></a>
                         </div>
                         ';
                     } else if ($hakEdit > 0 && $hakDelete == 0) {
                         $button .= '
                         <div class="g-2">
-                            <a class="btn modal-effect text-primary btn-sm" data-bs-effect="effect-super-scaled" data-bs-toggle="modal" href="#Umodaldemo8" data-bs-toggle="tooltip" data-bs-original-title="Edit" onclick=update(' . json_encode($array) . ')><span class="fe fe-edit text-success fs-14"></span></a>
+                            <a class="btn modal-effect text-primary btn-sm js-edit-barang" data-bs-effect="effect-super-scaled" data-bs-toggle="modal" href="#Umodaldemo8" data-bs-toggle="tooltip" data-bs-original-title="Edit" data-id="' . $barangId . '" data-kode="' . $barangKode . '" data-nama="' . $barangNama . '" data-jenisbarang-id="' . $jenisbarangId . '" data-satuan-id="' . $satuanId . '" data-merk-id="' . $merkId . '" data-stok="' . $barangStok . '" data-harga="' . $barangHarga . '" data-gambar="' . $barangGambar . '"><span class="fe fe-edit text-success fs-14"></span></a>
                         </div>
                         ';
                     } else if ($hakEdit == 0 && $hakDelete > 0) {
                         $button .= '
                         <div class="g-2">
-                        <a class="btn modal-effect text-danger btn-sm" data-bs-effect="effect-super-scaled" data-bs-toggle="modal" href="#Hmodaldemo8" onclick=hapus(' . json_encode($array) . ')><span class="fe fe-trash-2 fs-14"></span></a>
+                        <a class="btn modal-effect text-danger btn-sm js-hapus-barang" data-bs-effect="effect-super-scaled" data-bs-toggle="modal" href="#Hmodaldemo8" data-id="' . $barangId . '" data-nama="' . $barangNama . '"><span class="fe fe-trash-2 fs-14"></span></a>
                         </div>
                         ';
                     } else {

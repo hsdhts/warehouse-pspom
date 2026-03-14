@@ -38,7 +38,6 @@
                             <th class="border-bottom-0">Satuan</th>
                             <th class="border-bottom-0">Merk</th>
                             <th class="border-bottom-0">Stok</th>
-                            <th class="border-bottom-0">Harga</th>
                             <th class="border-bottom-0" width="1%">Action</th>
                         </thead>
                         <tbody></tbody>
@@ -79,19 +78,20 @@
     function update(data){
         $("input[name='idbarangU']").val(data.barang_id);
         $("input[name='kodeU']").val(data.barang_kode);
-        $("input[name='namaU']").val(data.barang_nama.replace(/_/g, ' '));
+        $("input[name='namaU']").val(data.barang_nama);
         $("select[name='jenisbarangU']").val(data.jenisbarang_id);
         $("select[name='satuanU']").val(data.satuan_id);
         $("select[name='merkU']").val(data.merk_id);
         $("input[name='stokU']").val(data.barang_stok);
-        $("input[name='hargaU']").val(data.barang_harga.replace(/_/g, ' '));
         if(data.barang_gambar != 'image.png'){
             $("#outputImgU").attr("src", "{{asset('storage/barang/')}}"+"/"+data.barang_gambar);
+        } else {
+            $("#outputImgU").attr("src", "{{url('/assets/default/barang/image.png')}}");
         }
     }
     function hapus(data) {
         $("input[name='idbarang']").val(data.barang_id);
-        $("#vbarang").html("barang " + "<b>" + data.barang_nama.replace(/_/g, ' ') + "</b>");
+        $("#vbarang").html("barang " + "<b>" + $('<div/>').text(data.barang_nama).html() + "</b>");
     }
     function gambar(data) {
         if(data.barang_gambar != 'image.png'){
@@ -124,6 +124,28 @@
     });
     var table;
     $(document).ready(function() {
+        $(document).on('click', '.js-edit-barang', function() {
+            const $btn = $(this);
+            update({
+                barang_id: $btn.data('id'),
+                barang_kode: $btn.data('kode'),
+                barang_nama: $btn.data('nama'),
+                jenisbarang_id: $btn.attr('data-jenisbarang-id'),
+                satuan_id: $btn.attr('data-satuan-id'),
+                merk_id: $btn.attr('data-merk-id'),
+                barang_stok: $btn.data('stok'),
+                barang_gambar: $btn.data('gambar'),
+            });
+        });
+
+        $(document).on('click', '.js-hapus-barang', function() {
+            const $btn = $(this);
+            hapus({
+                barang_id: $btn.data('id'),
+                barang_nama: $btn.data('nama'),
+            });
+        });
+
         //datatables
         table = $('#table-1').DataTable({
             "processing": true,
@@ -181,10 +203,6 @@
                 {
                     data: 'totalstok',
                     name: 'barang_stok',
-                },
-                {
-                    data: 'currency',
-                    name: 'barang_harga'
                 },
                 {
                     data: 'action',
